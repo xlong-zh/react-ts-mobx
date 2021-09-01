@@ -1,12 +1,15 @@
-import { lazy } from 'react';
+import { lazy, ReactNode } from 'react';
+import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 
 const Login = lazy(() => import('../pages/Login'));
-const Dashborad = lazy(() => import('../pages/Dashboard/Index'));
 const Err404 = lazy(() => import('../pages/404/404'));
+const Dashborad = lazy(() => import('../pages/dashboard/Index'));
+const UserList = lazy(() => import('../pages/user/UserList'));
 
-interface IRouter {
+export interface IRouter {
   title: string;
   path: string;
+  icon?: ReactNode;
   exact?: boolean;
   component?: any;
   children?: IRouter[];
@@ -29,7 +32,24 @@ export const asyncRoutes: IRouter[] = [
   {
     path: '/dashborad',
     title: '首页',
+    icon: UserOutlined,
     exact: true,
     component: Dashborad,
+  },
+  {
+    path: '/userList',
+    title: '用户管理',
+    icon: LaptopOutlined,
+    exact: true,
+    // component: UserList,
+    children:[
+      {
+        path: '/userList/list',
+        title: '用户列表',
+        icon: LaptopOutlined,
+        exact: true,
+        component: UserList,
+      },
+    ]
   },
 ];
