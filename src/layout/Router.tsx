@@ -12,12 +12,11 @@ export default class Index extends React.Component {
       return <Route key={r.path} {...r} />;
     });
   };
-
   render() {
     return (
       <>
-        <Suspense fallback={<div>Loading...</div>}>
-          <BrowserRouter>
+        <BrowserRouter>
+          <Suspense fallback={<div>Loading...</div>}>
             <Switch>
               <Redirect from="/" exact to="/dashborad" />
               {/* 公开路由 */}
@@ -26,19 +25,18 @@ export default class Index extends React.Component {
               ))}
               <Route path="/">
                 <AppLayout>
-                  <Switch>
-                    {/* 权限路由 */}
-                    {/* {asyncRoutes.map((r) => (
-                      <Route key={r.path} {...r} />
-                    ))} */}
-                    {this.generateRouter(asyncRoutes)}
-                    <Redirect from="*" exact to="/404" />
-                  </Switch>
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <Switch>
+                      {/* 权限路由 */}
+                      {this.generateRouter(asyncRoutes)}
+                      <Redirect from="*" exact to="/404" />
+                    </Switch>
+                  </Suspense>
                 </AppLayout>
               </Route>
             </Switch>
-          </BrowserRouter>
-        </Suspense>
+          </Suspense>
+        </BrowserRouter>
       </>
     );
   }

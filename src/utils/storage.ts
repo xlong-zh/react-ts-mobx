@@ -1,12 +1,12 @@
-export const rm = (key: string) => {
+export const rmLocal = (key: string) => {
   localStorage.removeItem(key);
 };
-export const get = (key: string): string | null => {
+export const getLocal = (key: string): string | null => {
   return localStorage.getItem(key);
 };
-export const set = (key: string, val: string) => {
+export const setLocal = (key: string, val: string) => {
   return localStorage.setItem(key, val);
 };
-export const clear = () => {
+export const clearLocal = () => {
   return localStorage.clear();
 };

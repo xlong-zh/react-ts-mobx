@@ -1,17 +1,18 @@
-import { lazy, ReactNode } from 'react';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { lazy, ReactNode, LazyExoticComponent } from 'react';
+import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
 
 const Login = lazy(() => import('../pages/Login'));
 const Err404 = lazy(() => import('../pages/404/404'));
 const Dashborad = lazy(() => import('../pages/dashboard/Index'));
 const UserList = lazy(() => import('../pages/user/UserList'));
+const AdminList = lazy(() => import('../pages/admin/AdminList'));
 
 export interface IRouter {
   title: string;
   path: string;
   icon?: ReactNode;
   exact?: boolean;
-  component?: any;
+  component?: LazyExoticComponent<any>;
   children?: IRouter[];
 }
 export const constRoutes: IRouter[] = [
@@ -32,24 +33,38 @@ export const asyncRoutes: IRouter[] = [
   {
     path: '/dashborad',
     title: '首页',
-    icon: UserOutlined,
+    icon: <UserOutlined />,
     exact: true,
     component: Dashborad,
   },
   {
     path: '/userList',
     title: '用户管理',
-    icon: LaptopOutlined,
+    icon: <LaptopOutlined />,
     exact: true,
-    // component: UserList,
-    children:[
+    children: [
       {
         path: '/userList/list',
         title: '用户列表',
-        icon: LaptopOutlined,
+        icon: <LaptopOutlined />,
         exact: true,
         component: UserList,
       },
-    ]
+    ],
+  },
+  {
+    path: '/admin',
+    title: '管理员管理',
+    icon: <LaptopOutlined />,
+    exact: true,
+    children: [
+      {
+        path: '/admin/list',
+        title: '管理员列表',
+        icon: <LaptopOutlined />,
+        exact: true,
+        component: AdminList,
+      },
+    ],
   },
 ];

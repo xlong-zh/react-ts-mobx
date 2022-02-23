@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, Router } from 'react-router-dom';
+import React, { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, Layout } from 'antd';
 
 import { asyncRoutes, IRouter } from '../../router';
@@ -9,10 +9,16 @@ const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
 
 export default class Index extends React.Component {
-  generateMenu = (routerList?: IRouter[]) => {
+  generateMenu = (routerList?: IRouter[]): ReactNode => {
     return routerList?.map((r) => {
       if (r.children) {
         return (
+          // title={
+          //   <span>
+          //     {r.icon && <r.icon></r.icon>}
+          //     <span>{r.title}</span>
+          //   </span>
+          // }
           <SubMenu key={r.path} icon={r.icon} title={r.title}>
             {this.generateMenu(r.children)}
           </SubMenu>

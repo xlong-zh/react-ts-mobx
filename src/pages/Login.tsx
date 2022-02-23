@@ -2,8 +2,8 @@ import React, { createRef, RefObject } from 'react';
 import { Button, Form, FormInstance, Input, message, Space } from 'antd';
 
 import styles from './login.module.scss';
-import { login } from '../api/login';
-import { set } from '../utils/storage';
+import {login} from '../api/login';
+import { setLocal } from '../utils/storage';
 
 const layout = {
   labelCol: { span: 6 },
@@ -15,10 +15,10 @@ const tailLayout = {
 
 export default class Login extends React.Component {
   formRef: RefObject<FormInstance>;
-  constructor(props: any, context: any) {
-    super(props, context);
+  constructor(props: any) {
+    super(props);
     this.formRef = createRef<FormInstance>();
-    this.state = {};
+    // this.state = {};
   }
 
   componentDidMount() {}
@@ -27,7 +27,7 @@ export default class Login extends React.Component {
     login(form.name, form.password).then((response) => {
       const { code, msg, data } = response.data;
       if (code === 0) {
-        set('token', data.token);
+        setLocal('token', data.token);
         window.location.href = '/';
         message.success(msg);
       } else {

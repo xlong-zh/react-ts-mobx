@@ -5,10 +5,12 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 import Router from './layout/Router';
 
+import './mock/index'
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Router />
-  </React.StrictMode>,
+  // <React.StrictMode>
+    <Router />,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
