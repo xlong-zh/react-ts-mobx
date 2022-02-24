@@ -1,20 +1,15 @@
 import React from 'react';
+import UserDetail from './UserDetail';
 // import { } from 'antd';
 
-
 export default class Index extends React.Component {
+  componentDidMount() {}
 
-
-componentDidMount() {
-
-}
-
-render() {
-
-return (
-<div>
-userList
-</div>
-);
-}
+  render() {
+    return (
+      <div>
+        <UserDetail />
+      </div>
+    );
+  }
 }

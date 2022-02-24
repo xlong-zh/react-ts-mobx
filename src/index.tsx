@@ -11,12 +11,17 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+
+import { Provider } from 'mobx-react';
+import store from './store';
 moment.locale('cn');
 
 ReactDOM.render(
   // <React.StrictMode>
   <ConfigProvider locale={zhCN}>
-    <Router />
+    <Provider {...store}>
+      <Router />
+    </Provider>
   </ConfigProvider>,
   // </React.StrictMode>,
   document.getElementById('root')

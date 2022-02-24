@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import SideMenu from './sideMenu/SideMenu';
 import Crumb from './Crumb/Crumb';
+import User from './User/User';
 
 const { Header, Content } = Layout;
 
@@ -10,7 +11,7 @@ export default class Index extends React.Component {
     return (
       <Layout>
         <Header className="header">
-          <div className="logo" />
+          <User />
         </Header>
         <Layout>
           <SideMenu />

@@ -1,16 +1,25 @@
 const Mock = require('mockjs');
 const login = (req) => {
   //接受参数：是JSON格式，需要转换成对象
-  const username = JSON.parse(req.body).username;
+  // const username = JSON.parse(req.body).username;
   return {
     code: 200,
     msg: 'success',
     data: {
-      avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-      name: username,
       token: 11111111111,
-      sex: 1,
-      role: ['admin'],
+    },
+  };
+};
+const getAdminInfo = (req) => {
+  //接受参数：是JSON格式，需要转换成对象
+  // const username = JSON.parse(req.body).username;
+  return {
+    code: 200,
+    msg: 'success',
+    data: {
+      id: 1,
+      avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+      name: '222222222222222222',
     },
   };
 };
@@ -57,6 +66,7 @@ const userList = (req) => {
 module.exports = [
   {
     'post|login': login,
+    'post|getAdminInfo': getAdminInfo,
     'post|loginOut': loginOut,
     'post|changeRole': changeRole,
     'post|userList': userList,

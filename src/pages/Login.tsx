@@ -1,9 +1,15 @@
 import React, { createRef, RefObject } from 'react';
 import { Button, Form, FormInstance, Input, message, Space } from 'antd';
-
 import styles from './login.module.scss';
-import {login} from '../api/login';
-import { setLocal } from '../utils/storage';
+import { login } from '../api/login';
+// import { setLocal } from '../utils/storage';
+import { inject, observer } from 'mobx-react';
+import AdminStore from '../store/AdminStore';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
+interface IProps extends RouteComponentProps {
+  AdminStore?: AdminStore;
+}
 
 const layout = {
   labelCol: { span: 6 },
@@ -13,9 +19,11 @@ const tailLayout = {
   wrapperCol: { offset: 6, span: 16 },
 };
 
-export default class Login extends React.Component {
+@inject('AdminStore')
+@observer
+class Login extends React.Component<IProps> {
   formRef: RefObject<FormInstance>;
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props);
     this.formRef = createRef<FormInstance>();
     // this.state = {};
@@ -25,10 +33,14 @@ export default class Login extends React.Component {
 
   login = (form: any) => {
     login(form.name, form.password).then((response) => {
-      const { code, msg, data } = response.data;
-      if (code === 0) {
-        setLocal('token', data.token);
-        window.location.href = '/';
+      console.log(response);
+      const { code, msg, data } = response as any;
+      if (code === 200) {
+        this.props.AdminStore?.login(data.token);
+        this.props.AdminStore?.initAdmin();
+        this.props.history.push('/');
+        // setLocal('token', data.token);
+        // window.location.href = '/';
         message.success(msg);
       } else {
         message.error(msg);
@@ -64,3 +76,5 @@ export default class Login extends React.Component {
     );
   }
 }
+
+export default withRouter(Login);
