@@ -59,6 +59,6 @@ module.exports = [
     'post|login': login,
     'post|loginOut': loginOut,
     'post|changeRole': changeRole,
-    'get|userList': userList,
+    'post|userList': userList,
   },
 ];

@@ -5,11 +5,19 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 import Router from './layout/Router';
 
-import './mock/index'
+import './mock/index';
+
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('cn');
 
 ReactDOM.render(
   // <React.StrictMode>
-    <Router />,
+  <ConfigProvider locale={zhCN}>
+    <Router />
+  </ConfigProvider>,
   // </React.StrictMode>,
   document.getElementById('root')
 );

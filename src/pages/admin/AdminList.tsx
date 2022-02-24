@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Space, Table } from 'antd';
 import { getAdminList } from '../../api/admin';
+import DeleteAdmin from './DeleteAdmin';
+import AddAdmin from './AddAdmin';
 
-// import styles from './index.less';
-
-interface IAdmin {
+export interface IAdmin {
   id: number;
   name: string;
   mobile: string;
@@ -16,7 +16,7 @@ interface IState {
   pageSize: number;
   total: number;
   loading: boolean;
-  // hideOnSinglePage:boolean
+  showAddAdminModal: boolean;
 }
 export default class Index extends React.Component<any, IState> {
   constructor(props: any) {
@@ -31,11 +31,17 @@ export default class Index extends React.Component<any, IState> {
         },
       ],
       current: 1,
-      pageSize: 15,
+      pageSize: 5,
       total: 0,
       loading: false,
+      showAddAdminModal: false,
     };
   }
+
+  componentDidMount() {
+    this.getAdminList();
+  }
+
   getAdminList = (page: number = 1) => {
     this.setState({
       loading: true,
@@ -47,7 +53,7 @@ export default class Index extends React.Component<any, IState> {
         adminList: list,
         loading: false,
         current: 1,
-        pageSize: 10,
+        pageSize: 5,
         total: 10,
       });
     });
@@ -55,35 +61,54 @@ export default class Index extends React.Component<any, IState> {
   change = (pagination: any) => {
     this.getAdminList(pagination.current);
   };
-  componentDidMount() {
-    this.getAdminList();
-  }
+  showAddAdminModal = () => {
+    this.setState({
+      showAddAdminModal: true,
+    });
+  };
+  hideAddModale = (refresh?: boolean) => {
+    if (refresh) {
+      this.getAdminList();
+    }
+    this.setState({
+      showAddAdminModal: false,
+    });
+  };
+  deleteAdmin = (id: number) => {
+    this.setState((state) => ({
+      adminList: state.adminList.filter((admin) => admin.id !== id),
+    }));
+  };
 
   render() {
     return (
-      <Table
-        loading={this.state.loading}
-        dataSource={this.state.adminList}
-        rowKey={'id'}
-        pagination={{ position: ['bottomCenter'], total: this.state.total, pageSize: this.state.pageSize, showSizeChanger: false }}
-        onChange={this.change}
-      >
-        <Table.Column title={'ID'} dataIndex={'id'} />
-        <Table.Column title={'姓名'} dataIndex={'name'} />
-        <Table.Column title={'邮箱'} dataIndex={'email'} />
-        <Table.Column title={'电话'} dataIndex={'mobile'} />
-        <Table.Column
-          title={'操作'}
-          render={() => (
-            <Space>
-              <Button type="primary">编辑</Button>
-              <Button type="primary" danger>
-                删除
-              </Button>
-            </Space>
-          )}
-        />
-      </Table>
+      <>
+        <Button type="primary" onClick={this.showAddAdminModal}>
+          添加管理员
+        </Button>
+        <Table
+          loading={this.state.loading}
+          dataSource={this.state.adminList}
+          rowKey={'id'}
+          pagination={{ position: ['bottomCenter'], total: this.state.total, pageSize: this.state.pageSize, showSizeChanger: false }}
+          onChange={this.change}
+        >
+          <Table.Column title={'ID'} dataIndex={'id'} />
+          <Table.Column title={'姓名'} dataIndex={'name'} />
+          <Table.Column title={'邮箱'} dataIndex={'email'} />
+          <Table.Column title={'电话'} dataIndex={'mobile'} />
+          <Table.Column
+            title={'操作'}
+            render={(admin: IAdmin) => (
+              <Space>
+                <Button type="primary">编辑</Button>
+                <DeleteAdmin id={admin.id} deleteAdmin={this.deleteAdmin} />
+              </Space>
+            )}
+          />
+        </Table>
+        <AddAdmin visible={this.state.showAddAdminModal} callback={this.hideAddModale} />
+      </>
     );
   }
 }

@@ -1,14 +1,46 @@
 import React, { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, matchPath, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Menu, Layout } from 'antd';
 
 import { asyncRoutes, IRouter } from '../../router';
 
-// import styles from './index.less';
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
 
-export default class Index extends React.Component {
+interface IState {
+  defaultOpenKeys: string[];
+  defaultSelectedKeys: string[];
+}
+interface IProps extends RouteComponentProps {}
+
+class Index extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      defaultOpenKeys: [],
+      defaultSelectedKeys: [],
+    };
+  }
+  UNSAFE_componentWillMount() {
+    this.heghtMenu(asyncRoutes);
+  }
+  heghtMenu = (asyncRoutes: IRouter[]) => {
+    let path = this.props.location.pathname;
+    for (let r of asyncRoutes) {
+      let match = matchPath(path, { path: r.path });
+      if (match) {
+        console.log(match);
+        if (match.isExact) {
+          this.setState({ defaultSelectedKeys: [r.path] });
+        } else {
+          this.setState({ defaultOpenKeys: [r.path] });
+        }
+      }
+      if (r.children && r.children.length) {
+        this.heghtMenu(r.children);
+      }
+    }
+  };
   generateMenu = (routerList?: IRouter[]): ReactNode => {
     return routerList?.map((r) => {
       if (r.children) {
@@ -36,11 +68,20 @@ export default class Index extends React.Component {
     return (
       <>
         <Sider width={200} className="site-layout-background">
-          <Menu mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} style={{ height: '100%', borderRight: 0 }}>
-            {this.generateMenu(asyncRoutes)}
-          </Menu>
+          {this.state.defaultSelectedKeys ? (
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={this.state.defaultSelectedKeys}
+              defaultOpenKeys={this.state.defaultOpenKeys}
+              style={{ height: '100%', borderRight: 0 }}
+            >
+              {this.generateMenu(asyncRoutes)}
+            </Menu>
+          ) : null}
         </Sider>
       </>
     );
   }
 }
+
+export default withRouter(Index);

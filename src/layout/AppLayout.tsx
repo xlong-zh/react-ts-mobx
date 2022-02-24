@@ -1,6 +1,7 @@
 import React from 'react';
-import { Layout, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 import SideMenu from './sideMenu/SideMenu';
+import Crumb from './Crumb/Crumb';
 
 const { Header, Content } = Layout;
 
@@ -14,11 +15,7 @@ export default class Index extends React.Component {
         <Layout>
           <SideMenu />
           <Layout style={{ padding: '0 24px 24px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
+            <Crumb />
             <Content
               className="site-layout-background"
               style={{

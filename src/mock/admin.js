@@ -13,13 +13,31 @@ const adminList = (req) => {
     code: 200,
     msg: 'success',
     data: Mock.mock({
-      'list|3-10': [{ 'id|+1': 1, name: '@cname', mobile: '111', email: '222' }],
+      'list|10': [{ 'id|+1': 1, name: '@cname', mobile: '111', email: '222' }],
     }),
+  };
+};
+const adminDelete = (req) => {
+  //接受参数：是JSON格式，需要转换成对象
+  // const adminId = JSON.parse(req.body).adminId;
+  return {
+    code: 200,
+    msg: 'success',
+  };
+};
+const adminAdd = (req) => {
+  //接受参数：是JSON格式，需要转换成对象
+  // const adminId = JSON.parse(req.body).adminId;
+  return {
+    code: 200,
+    msg: 'success',
   };
 };
 
 module.exports = [
   {
-    'get|adminList': adminList,
+    'post|adminList': adminList,
+    'post|adminDelete': adminDelete,
+    'post|adminAdd': adminAdd,
   },
 ];
