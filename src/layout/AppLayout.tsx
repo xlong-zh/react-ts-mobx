@@ -6,7 +6,10 @@ import User from './User/User';
 
 const { Header, Content } = Layout;
 
-export default class Index extends React.Component {
+
+ class Index extends React.Component {
+
+
   render() {
     return (
       <Layout>
@@ -33,3 +36,4 @@ export default class Index extends React.Component {
     );
   }
 }
+export default Index

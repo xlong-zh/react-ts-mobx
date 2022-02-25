@@ -37,10 +37,7 @@ class Login extends React.Component<IProps> {
       const { code, msg, data } = response as any;
       if (code === 200) {
         this.props.AdminStore?.login(data.token);
-        this.props.AdminStore?.initAdmin();
         this.props.history.push('/');
-        // setLocal('token', data.token);
-        // window.location.href = '/';
         message.success(msg);
       } else {
         message.error(msg);

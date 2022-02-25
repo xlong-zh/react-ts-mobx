@@ -4,6 +4,7 @@ import { getRoleList } from '../../api/permission';
 import DeleteRole from './DeleteRole';
 import AddRole from './AddRole';
 import EditRole from './EditRole';
+import Auth from '../../components/Auth';
 
 export interface IRole {
   id: number;
@@ -120,7 +121,9 @@ export default class Index extends React.Component<any, IState> {
                 >
                   编辑
                 </Button>
-                <DeleteRole id={role.id} callback={this.deleteRole} />
+                <Auth path="roleDel">
+                  <DeleteRole id={role.id} callback={this.deleteRole} />
+                </Auth>
               </Space>
             )}
           />

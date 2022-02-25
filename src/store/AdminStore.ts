@@ -30,6 +30,7 @@ export default class AdminStore {
   @action
   initAdmin = async () => {
     const admin = await getAdminInfo().then((res) => {
+      console.log('getAdminInfo');
       console.log(res);
       return res.data;
     });

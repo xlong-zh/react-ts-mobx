@@ -2,9 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
-
-import Router from './layout/Router';
-
 import './mock/index';
 
 import { ConfigProvider } from 'antd';
@@ -14,13 +11,14 @@ import 'moment/locale/zh-cn';
 
 import { Provider } from 'mobx-react';
 import store from './store';
+import App from './App';
 moment.locale('cn');
 
 ReactDOM.render(
   // <React.StrictMode>
   <ConfigProvider locale={zhCN}>
     <Provider {...store}>
-      <Router />
+      <App />
     </Provider>
   </ConfigProvider>,
   // </React.StrictMode>,
